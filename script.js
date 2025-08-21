@@ -1,60 +1,64 @@
-// Show data - This would typically come from an API
+// Real TyphoonHub show data from your YouTube channel
 const showsData = [
     {
         id: 1,
-        title: "MAMI",
-        genre: "Drama",
-        thumbnail: "https://images.unsplash.com/photo-1489599128872-7e18526b2176?w=400&h=225&fit=crop",
-        description: "A compelling drama series"
+        title: "Jwhonjovouchor and the Yiiiii Kakai Voice of Waste Masks",
+        genre: "Documentary",
+        thumbnail: "https://img.youtube.com/vi/v3_ueH-TMdc/maxresdefault.jpg",
+        description: "An intimate look into the world of Ghanaian artist Jwhonjovouchor, who transforms discarded materials and ocean waste into breathtaking masks and sculptures.",
+        youtubeId: "v3_ueH-TMdc",
+        duration: "Documentary Feature",
+        channel: "TyphoonENT"
     },
     {
         id: 2,
-        title: "Alice And Huck",
-        genre: "Adventure",
-        thumbnail: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400&h=225&fit=crop",
-        description: "An adventure tale of friendship"
+        title: "TyphoonHub Original Content #2",
+        genre: "Original Series",
+        thumbnail: "https://img.youtube.com/vi/MtIRD4VX_bo/maxresdefault.jpg",
+        description: "Original content from TyphoonHub showcasing independent filmmaking and creative storytelling.",
+        youtubeId: "MtIRD4VX_bo",
+        duration: "Series Episode",
+        channel: "TyphoonENT"
     },
     {
         id: 3,
-        title: "When Jesse was Born",
-        genre: "Biography",
-        thumbnail: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=225&fit=crop",
-        description: "A biographical journey"
+        title: "TyphoonHub Original Content #3",
+        genre: "Original Series", 
+        thumbnail: "https://img.youtube.com/vi/IHWigm2UgQE/maxresdefault.jpg",
+        description: "Continuing the series of original independent films and creative content from emerging filmmakers.",
+        youtubeId: "IHWigm2UgQE",
+        duration: "Series Episode",
+        channel: "TyphoonENT"
     },
     {
         id: 4,
-        title: "Thirsty (Trailer)",
-        genre: "Thriller",
-        thumbnail: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=225&fit=crop",
-        description: "A thrilling trailer"
+        title: "TyphoonHub Original Content #4",
+        genre: "Original Series",
+        thumbnail: "https://img.youtube.com/vi/kMBqikKeXYM/maxresdefault.jpg", 
+        description: "Independent filmmaking showcase featuring unique stories and creative vision from up-and-coming directors.",
+        youtubeId: "kMBqikKeXYM",
+        duration: "Series Episode",
+        channel: "TyphoonENT"
     },
     {
         id: 5,
-        title: "New Day",
-        genre: "Romance",
-        thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=225&fit=crop",
-        description: "A romantic story of new beginnings"
+        title: "TyphoonHub Original Content #5",
+        genre: "Original Series",
+        thumbnail: "https://img.youtube.com/vi/QW6_dfNfE0c/maxresdefault.jpg",
+        description: "Exploring diverse narratives and artistic expression through independent film and digital storytelling.",
+        youtubeId: "QW6_dfNfE0c", 
+        duration: "Series Episode",
+        channel: "TyphoonENT"
     },
     {
         id: 6,
-        title: "Typhoon Talk: Break the Stigma",
-        genre: "Documentary",
-        thumbnail: "https://images.unsplash.com/photo-1574267432553-4b4628081c31?w=400&h=225&fit=crop",
-        description: "Breaking barriers and stigmas"
-    },
-    {
-        id: 7,
-        title: "Silent Waters",
-        genre: "Mystery",
-        thumbnail: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=400&h=225&fit=crop",
-        description: "A mysterious tale by the water"
-    },
-    {
-        id: 8,
-        title: "City Lights",
-        genre: "Urban Drama",
-        thumbnail: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1f?w=400&h=225&fit=crop",
-        description: "Stories from the big city"
+        title: "TyphoonHub Original Content #6",
+        genre: "Original Series",
+        thumbnail: "https://img.youtube.com/vi/6gmYHtOfWa4/maxresdefault.jpg",
+        description: "Latest installment in the TyphoonHub original series, featuring innovative filmmaking and compelling stories.",
+        youtubeId: "6gmYHtOfWa4",
+        duration: "Series Episode", 
+        channel: "TyphoonENT"
     }
 ];
 
@@ -65,7 +69,7 @@ class ShowsManager {
         this.prevBtn = document.getElementById('prevBtn');
         this.nextBtn = document.getElementById('nextBtn');
         this.currentPage = 0;
-        this.showsPerPage = 6;
+        this.showsPerPage = 12; // Show all your content on one page
         this.maxPages = Math.ceil(showsData.length / this.showsPerPage);
         
         this.init();
@@ -119,10 +123,12 @@ class ShowsManager {
         showCard.innerHTML = `
             <div class="thumbnail-container">
                 ${this.createThumbnailElement(show)}
+                ${show.youtubeId ? '<div class="play-overlay"><div class="play-button">▶</div></div>' : ''}
             </div>
             <div class="show-info">
                 <h3 class="show-title">${this.escapeHtml(show.title)}</h3>
                 <p class="show-genre">${this.escapeHtml(show.genre)}</p>
+                ${show.duration ? `<p class="show-duration">${this.escapeHtml(show.duration)}</p>` : ''}
             </div>
         `;
         
@@ -131,13 +137,16 @@ class ShowsManager {
     
     createThumbnailElement(show) {
         if (show.thumbnail) {
+            // For YouTube thumbnails, try maxresdefault first, fallback to hqdefault
+            const fallbackThumbnail = show.youtubeId ? 
+                `https://img.youtube.com/vi/${show.youtubeId}/hqdefault.jpg` : null;
+            
             return `
                 <img 
                     class="thumbnail-image" 
                     src="${show.thumbnail}" 
                     alt="${this.escapeHtml(show.title)} thumbnail"
-                    onerror="this.parentElement.innerHTML = this.parentElement.dataset.fallback"
-                    data-fallback='<div class="thumbnail-placeholder" aria-label="No thumbnail available"></div>'
+                    onerror="this.onerror=null; this.src='${fallbackThumbnail || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'225\' viewBox=\'0 0 400 225\'%3E%3Crect width=\'400\' height=\'225\' fill=\'%23333\'/%3E%3Ctext x=\'200\' y=\'112.5\' text-anchor=\'middle\' dy=\'.3em\' fill=\'white\' font-family=\'Arial\' font-size=\'24\'%3E🎬%3C/text%3E%3C/svg%3E'}'; if(!this.src.includes('hqdefault') && !this.src.includes('data:image')) { this.parentElement.innerHTML = '<div class=\\'thumbnail-placeholder\\' aria-label=\\'No thumbnail available\\'></div>'; }"
                     loading="lazy"
                 />
             `;
@@ -220,10 +229,12 @@ class ShowsManager {
     
     handleShowClick(showId) {
         const show = showsData.find(s => s.id == showId);
-        if (show) {
+        if (show && show.youtubeId) {
             console.log(`Playing show: ${show.title}`);
-            // Here you would typically navigate to the show page or open a modal
-            // For demo purposes, we'll just show an alert
+            // Open YouTube video in new tab for now
+            window.open(`https://www.youtube.com/watch?v=${show.youtubeId}`, '_blank');
+        } else if (show) {
+            // Fallback for shows without YouTube ID
             alert(`Opening "${show.title}" - ${show.description}`);
         }
     }

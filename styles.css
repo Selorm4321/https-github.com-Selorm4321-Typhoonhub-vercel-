@@ -22,13 +22,24 @@ body {
 /* Header styles */
 .header {
     margin-bottom: 40px;
+    text-align: center;
 }
 
 .header h1 {
     font-size: 2.5rem;
     font-weight: 300;
     color: #fff;
-    text-align: left;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header-subtitle {
+    font-size: 1.1rem;
+    color: #888;
+    font-weight: 300;
 }
 
 /* Main content */
@@ -117,21 +128,60 @@ body {
     );
 }
 
+/* Play overlay for YouTube videos */
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.show-card:hover .play-overlay {
+    opacity: 1;
+}
+
+.play-button {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.show-card:hover .play-button {
+    transform: scale(1);
+}
+
 /* Show info */
 .show-info {
     padding: 15px;
     height: 30%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .show-title {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: #fff;
     margin-bottom: 5px;
-    line-height: 1.3;
+    line-height: 1.2;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -140,7 +190,16 @@ body {
 }
 
 .show-genre {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    color: #ff6b6b;
+    font-weight: 500;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.show-duration {
+    font-size: 0.7rem;
     color: #888;
     opacity: 0.8;
 }

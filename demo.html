@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TyphoonHub Thumbnail Fix - Before & After Demo</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .demo-section {
+            margin-bottom: 40px;
+        }
+        
+        .demo-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .before, .after {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .before .section-title {
+            color: #ff6b6b;
+        }
+        
+        .after .section-title {
+            color: #51cf66;
+        }
+        
+        /* Before styling - problematic layout */
+        .before-shows {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        
+        .before-show {
+            min-width: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .before-show h3 {
+            font-size: 0.9rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        
+        .before-show p {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .no-thumbnail {
+            height: 80px;
+            background: #333;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.7rem;
+        }
+        
+        /* After styling - fixed layout */
+        .after-shows {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .after-show {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .after-show:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .after-thumbnail {
+            height: 80px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .after-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .after-placeholder {
+            color: #666;
+            font-size: 1.5rem;
+        }
+        
+        .after-info {
+            padding: 10px;
+        }
+        
+        .after-info h3 {
+            font-size: 0.9rem;
+            margin-bottom: 3px;
+            color: #fff;
+        }
+        
+        .after-info p {
+            font-size: 0.7rem;
+            color: #888;
+        }
+        
+        .features-list {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .features-list h3 {
+            color: #51cf66;
+            margin-bottom: 15px;
+        }
+        
+        .features-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .features-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .features-list li:before {
+            content: "✅ ";
+            margin-right: 10px;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .after-shows {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-section">
+            <h1 class="demo-title">🎬 TyphoonHub Thumbnail Fix - Before & After</h1>
+            
+            <div class="comparison">
+                <div class="before">
+                    <h2 class="section-title">❌ Before: Missing Thumbnails</h2>
+                    <div class="before-shows">
+                        <div class="before-show">
+                            <div class="no-thumbnail">No Image</div>
+                            <h3>MAMI</h3>
+                            <p>Drama</p>
+                        </div>
+                        <div class="before-show">
+                            <div class="no-thumbnail">No Image</div>
+                            <h3>Alice And Huck</h3>
+                            <p>Adventure</p>
+                        </div>
+                        <div class="before-show">
+                            <div class="no-thumbnail">No Image</div>
+                            <h3>When Jesse was Born</h3>
+                            <p>Biography</p>
+                        </div>
+                        <div class="before-show">
+                            <div class="no-thumbnail">No Image</div>
+                            <h3>Thirsty (Trailer)</h3>
+                            <p>Thriller</p>
+                        </div>
+                        <div class="before-show">
+                            <div class="no-thumbnail">No Image</div>
+                            <h3>New Day</h3>
+                            <p>Romance</p>
+                        </div>
+                        <div class="before-show">
+                            <div class="no-thumbnail">No Image</div>
+                            <h3>Typhoon Talk: Break the Stigma</h3>
+                            <p>Documentary</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="after">
+                    <h2 class="section-title">✅ After: Fixed Thumbnails</h2>
+                    <div class="after-shows">
+                        <div class="after-show">
+                            <div class="after-thumbnail">
+                                <div class="after-placeholder">🎬</div>
+                            </div>
+                            <div class="after-info">
+                                <h3>MAMI</h3>
+                                <p>Drama</p>
+                            </div>
+                        </div>
+                        <div class="after-show">
+                            <div class="after-thumbnail">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%23FF6B6B'/%3E%3Ctext x='200' y='112.5' text-anchor='middle' dy='.3em' fill='white' font-family='Arial' font-size='24'%3EAdventure%3C/text%3E%3C/svg%3E" alt="Alice And Huck">
+                            </div>
+                            <div class="after-info">
+                                <h3>Alice And Huck</h3>
+                                <p>Adventure</p>
+                            </div>
+                        </div>
+                        <div class="after-show">
+                            <div class="after-thumbnail">
+                                <div class="after-placeholder">🎬</div>
+                            </div>
+                            <div class="after-info">
+                                <h3>When Jesse was Born</h3>
+                                <p>Biography</p>
+                            </div>
+                        </div>
+                        <div class="after-show">
+                            <div class="after-thumbnail">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%23FF4757'/%3E%3Ctext x='200' y='112.5' text-anchor='middle' dy='.3em' fill='white' font-family='Arial' font-size='24'%3EThriller%3C/text%3E%3C/svg%3E" alt="Thirsty Trailer">
+                            </div>
+                            <div class="after-info">
+                                <h3>Thirsty (Trailer)</h3>
+                                <p>Thriller</p>
+                            </div>
+                        </div>
+                        <div class="after-show">
+                            <div class="after-thumbnail">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%23FF9FF3'/%3E%3Ctext x='200' y='112.5' text-anchor='middle' dy='.3em' fill='white' font-family='Arial' font-size='24'%3ERomance%3C/text%3E%3C/svg%3E" alt="New Day">
+                            </div>
+                            <div class="after-info">
+                                <h3>New Day</h3>
+                                <p>Romance</p>
+                            </div>
+                        </div>
+                        <div class="after-show">
+                            <div class="after-thumbnail">
+                                <div class="after-placeholder">🎬</div>
+                            </div>
+                            <div class="after-info">
+                                <h3>Typhoon Talk: Break the Stigma</h3>
+                                <p>Documentary</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="features-list">
+                <h3>🚀 Key Improvements</h3>
+                <ul>
+                    <li>Responsive grid layout that adapts to different screen sizes</li>
+                    <li>Elegant thumbnail placeholders for missing images</li>
+                    <li>Smooth hover animations and visual feedback</li>
+                    <li>Lazy loading for optimal performance</li>
+                    <li>Graceful error handling for failed image loads</li>
+                    <li>Accessibility support with proper ARIA labels</li>
+                    <li>Mobile-optimized touch interactions</li>
+                    <li>Pagination system for large content libraries</li>
+                    <li>Loading states with spinner animations</li>
+                    <li>API-ready architecture for easy integration</li>
+                </ul>
+            </div>
+            
+            <div class="cta-section">
+                <h3>🎯 Experience the Full Solution</h3>
+                <p>See the complete implementation with all features, animations, and responsive design.</p>
+                <a href="/" class="cta-button">View Live Demo</a>
+                <a href="https://github.com/user/typhoonhub-thumbnails" class="cta-button">View Code</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
