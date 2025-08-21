@@ -26,3 +26,7 @@
 2025-08-21 00:20:50,824 INFO gave up: webserver entered FATAL state, too many start retries too quickly
 2025-08-21 00:20:56,397 INFO spawned: 'webserver' with pid 10259
 2025-08-21 00:20:57,485 INFO success: webserver entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-21 00:32:22,888 INFO waiting for webserver to stop
+2025-08-21 00:32:22,889 WARN stopped: webserver (terminated by SIGTERM)
+2025-08-21 00:32:22,893 INFO spawned: 'webserver' with pid 11384
+2025-08-21 00:32:23,973 INFO success: webserver entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

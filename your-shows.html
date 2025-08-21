@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your TyphoonHub Shows - Real Content</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header-subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            font-weight: 300;
+        }
+        
+        .shows-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .show-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .show-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .thumbnail-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+        
+        .thumbnail-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .show-card:hover .thumbnail-image {
+            transform: scale(1.05);
+        }
+        
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .show-card:hover .play-overlay {
+            opacity: 1;
+        }
+        
+        .play-button {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        
+        .show-card:hover .play-button {
+            transform: scale(1);
+        }
+        
+        .show-info {
+            padding: 20px;
+        }
+        
+        .show-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .show-genre {
+            font-size: 0.8rem;
+            color: #ff6b6b;
+            font-weight: 500;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .show-description {
+            font-size: 0.85rem;
+            color: #ccc;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+        
+        .show-duration {
+            font-size: 0.75rem;
+            color: #888;
+            opacity: 0.8;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .shows-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🎬 Your TyphoonHub Shows</h1>
+            <p class="header-subtitle">Independent films and documentaries by TyphoonENT</p>
+        </header>
+        
+        <div class="shows-grid">
+            <div class="show-card" onclick="window.open('https://www.youtube.com/watch?v=v3_ueH-TMdc', '_blank')">
+                <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="https://img.youtube.com/vi/v3_ueH-TMdc/maxresdefault.jpg" alt="Jwhonjovouchor documentary thumbnail">
+                    <div class="play-overlay">
+                        <div class="play-button">▶</div>
+                    </div>
+                </div>
+                <div class="show-info">
+                    <h3 class="show-title">Jwhonjovouchor and the Yiiiii Kakai Voice of Waste Masks</h3>
+                    <p class="show-genre">Documentary</p>
+                    <p class="show-description">An intimate look into the world of Ghanaian artist Jwhonjovouchor, who transforms discarded materials and ocean waste into breathtaking masks and sculptures.</p>
+                    <p class="show-duration">Documentary Feature</p>
+                </div>
+            </div>
+            
+            <div class="show-card" onclick="window.open('https://www.youtube.com/watch?v=MtIRD4VX_bo', '_blank')">
+                <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="https://img.youtube.com/vi/MtIRD4VX_bo/maxresdefault.jpg" alt="TyphoonHub Original #2 thumbnail">
+                    <div class="play-overlay">
+                        <div class="play-button">▶</div>
+                    </div>
+                </div>
+                <div class="show-info">
+                    <h3 class="show-title">TyphoonHub Original Content #2</h3>
+                    <p class="show-genre">Original Series</p>
+                    <p class="show-description">Original content from TyphoonHub showcasing independent filmmaking and creative storytelling.</p>
+                    <p class="show-duration">Series Episode</p>
+                </div>
+            </div>
+            
+            <div class="show-card" onclick="window.open('https://www.youtube.com/watch?v=IHWigm2UgQE', '_blank')">
+                <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="https://img.youtube.com/vi/IHWigm2UgQE/maxresdefault.jpg" alt="TyphoonHub Original #3 thumbnail">
+                    <div class="play-overlay">
+                        <div class="play-button">▶</div>
+                    </div>
+                </div>
+                <div class="show-info">
+                    <h3 class="show-title">TyphoonHub Original Content #3</h3>
+                    <p class="show-genre">Original Series</p>
+                    <p class="show-description">Continuing the series of original independent films and creative content from emerging filmmakers.</p>
+                    <p class="show-duration">Series Episode</p>
+                </div>
+            </div>
+            
+            <div class="show-card" onclick="window.open('https://www.youtube.com/watch?v=kMBqikKeXYM', '_blank')">
+                <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="https://img.youtube.com/vi/kMBqikKeXYM/maxresdefault.jpg" alt="TyphoonHub Original #4 thumbnail">
+                    <div class="play-overlay">
+                        <div class="play-button">▶</div>
+                    </div>
+                </div>
+                <div class="show-info">
+                    <h3 class="show-title">TyphoonHub Original Content #4</h3>
+                    <p class="show-genre">Original Series</p>
+                    <p class="show-description">Independent filmmaking showcase featuring unique stories and creative vision from up-and-coming directors.</p>
+                    <p class="show-duration">Series Episode</p>
+                </div>
+            </div>
+            
+            <div class="show-card" onclick="window.open('https://www.youtube.com/watch?v=QW6_dfNfE0c', '_blank')">
+                <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="https://img.youtube.com/vi/QW6_dfNfE0c/maxresdefault.jpg" alt="TyphoonHub Original #5 thumbnail">
+                    <div class="play-overlay">
+                        <div class="play-button">▶</div>
+                    </div>
+                </div>
+                <div class="show-info">
+                    <h3 class="show-title">TyphoonHub Original Content #5</h3>
+                    <p class="show-genre">Original Series</p>
+                    <p class="show-description">Exploring diverse narratives and artistic expression through independent film and digital storytelling.</p>
+                    <p class="show-duration">Series Episode</p>
+                </div>
+            </div>
+            
+            <div class="show-card" onclick="window.open('https://www.youtube.com/watch?v=6gmYHtOfWa4', '_blank')">
+                <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="https://img.youtube.com/vi/6gmYHtOfWa4/maxresdefault.jpg" alt="TyphoonHub Original #6 thumbnail">
+                    <div class="play-overlay">
+                        <div class="play-button">▶</div>
+                    </div>
+                </div>
+                <div class="show-info">
+                    <h3 class="show-title">TyphoonHub Original Content #6</h3>
+                    <p class="show-genre">Original Series</p>
+                    <p class="show-description">Latest installment in the TyphoonHub original series, featuring innovative filmmaking and compelling stories.</p>
+                    <p class="show-duration">Series Episode</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h3>🚀 Enhanced Show Display</h3>
+            <p>Your content now has proper thumbnails, interactive elements, and professional presentation!</p>
+            <a href="/" class="cta-button">View Dynamic Version</a>
+            <a href="/demo.html" class="cta-button">See Before/After</a>
+        </div>
+    </div>
+</body>
+</html>
