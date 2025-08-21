@@ -1,1 +1,15 @@
 Server running on port 8080
+21/Aug/2025 00:19:36 - "GET / HTTP/1.1" 200 -
+21/Aug/2025 00:19:37 - "GET /styles.css HTTP/1.1" 200 -
+21/Aug/2025 00:19:37 - "GET /script.js HTTP/1.1" 200 -
+21/Aug/2025 00:19:37 - code 404, message File not found
+21/Aug/2025 00:19:37 - "GET /favicon.ico HTTP/1.1" 404 -
+21/Aug/2025 00:19:50 - code 404, message File not found
+21/Aug/2025 00:19:50 - "GET /robots.txt HTTP/1.1" 404 -
+21/Aug/2025 00:19:50 - "GET / HTTP/1.1" 200 -
+Server running on port 8080
+21/Aug/2025 00:21:11 - "GET / HTTP/1.1" 200 -
+21/Aug/2025 00:21:11 - "GET /script.js HTTP/1.1" 200 -
+21/Aug/2025 00:21:11 - "GET /styles.css HTTP/1.1" 200 -
+21/Aug/2025 00:21:11 - code 404, message File not found
+21/Aug/2025 00:21:11 - "GET /favicon.ico HTTP/1.1" 404 -
