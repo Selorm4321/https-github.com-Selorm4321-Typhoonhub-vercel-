@@ -1,59 +1,60 @@
 // Show data - This would typically come from an API
+// For demo purposes, some shows have thumbnails, others use placeholders to show the fallback system
 const showsData = [
     {
         id: 1,
         title: "MAMI",
         genre: "Drama",
-        thumbnail: "https://images.unsplash.com/photo-1489599128872-7e18526b2176?w=400&h=225&fit=crop",
+        thumbnail: null, // Intentionally null to show placeholder
         description: "A compelling drama series"
     },
     {
         id: 2,
         title: "Alice And Huck",
         genre: "Adventure",
-        thumbnail: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400&h=225&fit=crop",
+        thumbnail: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%23FF6B6B'/%3E%3Ctext x='200' y='112.5' text-anchor='middle' dy='.3em' fill='white' font-family='Arial' font-size='24'%3EAdventure%3C/text%3E%3C/svg%3E",
         description: "An adventure tale of friendship"
     },
     {
         id: 3,
         title: "When Jesse was Born",
         genre: "Biography",
-        thumbnail: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=225&fit=crop",
+        thumbnail: null, // Placeholder will be shown
         description: "A biographical journey"
     },
     {
         id: 4,
         title: "Thirsty (Trailer)",
         genre: "Thriller",
-        thumbnail: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=225&fit=crop",
+        thumbnail: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%23FF4757'/%3E%3Ctext x='200' y='112.5' text-anchor='middle' dy='.3em' fill='white' font-family='Arial' font-size='24'%3EThriller%3C/text%3E%3C/svg%3E",
         description: "A thrilling trailer"
     },
     {
         id: 5,
         title: "New Day",
         genre: "Romance",
-        thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=225&fit=crop",
+        thumbnail: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%23FF9FF3'/%3E%3Ctext x='200' y='112.5' text-anchor='middle' dy='.3em' fill='white' font-family='Arial' font-size='24'%3ERomance%3C/text%3E%3C/svg%3E",
         description: "A romantic story of new beginnings"
     },
     {
         id: 6,
         title: "Typhoon Talk: Break the Stigma",
         genre: "Documentary",
-        thumbnail: "https://images.unsplash.com/photo-1574267432553-4b4628081c31?w=400&h=225&fit=crop",
+        thumbnail: null, // Placeholder will be shown
         description: "Breaking barriers and stigmas"
     },
     {
         id: 7,
         title: "Silent Waters",
         genre: "Mystery",
-        thumbnail: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=400&h=225&fit=crop",
+        thumbnail: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%232F3542'/%3E%3Ctext x='200' y='112.5' text-anchor='middle' dy='.3em' fill='white' font-family='Arial' font-size='24'%3EMystery%3C/text%3E%3C/svg%3E",
         description: "A mysterious tale by the water"
     },
     {
         id: 8,
         title: "City Lights",
         genre: "Urban Drama",
-        thumbnail: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1f?w=400&h=225&fit=crop",
+        thumbnail: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%2355A3FF'/%3E%3Ctext x='200' y='112.5' text-anchor='middle' dy='.3em' fill='white' font-family='Arial' font-size='24'%3EUrban Drama%3C/text%3E%3C/svg%3E",
         description: "Stories from the big city"
     }
 ];
