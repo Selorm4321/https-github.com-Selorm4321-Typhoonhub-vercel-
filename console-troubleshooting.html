@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Troubleshooting - TyphoonHub Payment Fix</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .method {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .method h3 {
+            color: #ffd700;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .recommended { background: #28a745; }
+        .alternative { background: #17a2b8; }
+        .advanced { background: #fd7e14; }
+        
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .warning {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .success {
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid #28a745;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .step {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Console Troubleshooting Guide</h1>
+        <p>Multiple methods to inject the credit card form when console execution isn't working</p>
+        
+        <div class="warning">
+            <strong>⚠️ Current Issue:</strong> JavaScript code pasted in browser console is not executing when Enter is pressed.
+        </div>
+        
+        <!-- Method 1: Bookmarklet -->
+        <div class="method">
+            <h3>
+                📖 Method 1: Bookmarklet Injection 
+                <span class="status recommended">RECOMMENDED</span>
+            </h3>
+            <p>Create a bookmark that executes the code when clicked:</p>
+            
+            <div class="step">
+                <strong>Step 1:</strong> Copy this entire bookmarklet code:
+            </div>
+            <pre id="bookmarkletCode">javascript:(function(){
+/* TyphoonHub Payment Form Injector */
+console.log('🚀 TyphoonHub Payment Form Injector Starting...');
+
+// Check if we're on the investment page
+if (!window.location.href.includes('investment') && !document.querySelector('[data-modal="investment"]')) {
+    alert('⚠️ Please navigate to the investment page first, then click this bookmark.');
+    return;
+}
+
+// Find the payment modal
+const modal = document.querySelector('[data-modal="investment"]') || 
+              document.querySelector('.modal') || 
+              document.querySelector('[class*="modal"]') ||
+              document.querySelector('[id*="modal"]');
+
+if (!modal) {
+    alert('❌ Payment modal not found. Please open the investment payment modal first.');
+    return;
+}
+
+// Check if form already exists
+if (modal.querySelector('#paymentForm')) {
+    alert('✅ Payment form already exists!');
+    return;
+}
+
+// Create the enhanced payment form
+const formHTML = `
+<div id="paymentFormContainer" style="padding: 20px; background: rgba(255,255,255,0.95); border-radius: 15px; margin: 15px 0;">
+    <h3 style="color: #333; margin-bottom: 20px; text-align: center;">💳 Complete Your Investment</h3>
+    
+    <form id="paymentForm" style="max-width: 400px; margin: 0 auto;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #555; font-weight: bold;">📧 Email Address</label>
+            <input type="email" id="email" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;" placeholder="your@email.com">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #555; font-weight: bold;">👤 Cardholder Name</label>
+            <input type="text" id="cardholderName" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;" placeholder="John Doe">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #555; font-weight: bold;">💳 Card Number</label>
+            <input type="text" id="cardNumber" required maxlength="19" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;" placeholder="1234 5678 9012 3456">
+        </div>
+        
+        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+            <div style="flex: 1;">
+                <label style="display: block; margin-bottom: 5px; color: #555; font-weight: bold;">📅 Expiry</label>
+                <input type="text" id="expiryDate" required maxlength="5" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;" placeholder="MM/YY">
+            </div>
+            <div style="flex: 1;">
+                <label style="display: block; margin-bottom: 5px; color: #555; font-weight: bold;">🔒 CVC</label>
+                <input type="text" id="cvc" required maxlength="4" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;" placeholder="123">
+            </div>
+        </div>
+        
+        <button type="submit" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #28a745, #20c997); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+            🚀 Complete Investment Payment
+        </button>
+        
+        <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-radius: 8px; font-size: 14px; color: #1565c0;">
+            🧪 <strong>Test Mode:</strong> Use card 4242 4242 4242 4242, any future date, any CVC
+        </div>
+    </form>
+    
+    <div id="paymentResult" style="margin-top: 20px; padding: 15px; border-radius: 8px; display: none;"></div>
+</div>
+`;
+
+// Remove any existing processing message
+const processingMsg = modal.querySelector('[class*="processing"]') || modal.querySelector('p');
+if (processingMsg && processingMsg.textContent.includes('Processing')) {
+    processingMsg.style.display = 'none';
+}
+
+// Insert the form
+const modalBody = modal.querySelector('.modal-body') || modal.querySelector('[class*="content"]') || modal;
+modalBody.insertAdjacentHTML('beforeend', formHTML);
+
+// Add form validation and formatting
+const cardNumber = document.getElementById('cardNumber');
+const expiryDate = document.getElementById('expiryDate');
+const cvc = document.getElementById('cvc');
+
+// Format card number
+cardNumber.addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+    let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+    e.target.value = formattedValue;
+});
+
+// Format expiry date
+expiryDate.addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    }
+    e.target.value = value;
+});
+
+// Format CVC
+cvc.addEventListener('input', function(e) {
+    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+});
+
+// Handle form submission
+document.getElementById('paymentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const resultDiv = document.getElementById('paymentResult');
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = '<div style="color: #007bff;">🔄 Processing payment...</div>';
+    
+    // Simulate payment processing
+    setTimeout(() => {
+        resultDiv.innerHTML = `
+            <div style="color: #28a745; text-align: center;">
+                <h4>✅ Payment Simulation Complete!</h4>
+                <p><strong>Next Steps:</strong></p>
+                <ol style="text-align: left; margin: 10px 0;">
+                    <li>✅ Form fields are now working</li>
+                    <li>🔗 Connect to real Stripe API</li>
+                    <li>🚀 Deploy to production</li>
+                </ol>
+                <p style="font-size: 12px; color: #666;">This is a test transaction - no real payment was processed.</p>
+            </div>
+        `;
+    }, 2000);
+});
+
+alert('✅ Payment form successfully injected! The credit card form is now available in the modal.');
+console.log('✅ TyphoonHub Payment Form Injection Complete!');
+})();</pre>
+            
+            <div class="step">
+                <strong>Step 2:</strong> Create a new bookmark in your browser:
+                <ul>
+                    <li>Right-click bookmarks bar → "Add page" or "New bookmark"</li>
+                    <li>Name: "Fix TyphoonHub Payment"</li>
+                    <li>URL: Paste the entire bookmarklet code above</li>
+                </ul>
+            </div>
+            
+            <div class="step">
+                <strong>Step 3:</strong> Use the bookmarklet:
+                <ul>
+                    <li>Navigate to the TyphoonHub investment page</li>
+                    <li>Open the payment modal (click "Invest Now")</li>
+                    <li>Click your new bookmark</li>
+                </ul>
+            </div>
+            
+            <button class="btn" onclick="copyBookmarklet()">📋 Copy Bookmarklet Code</button>
+        </div>
+        
+        <!-- Method 2: DevTools Sources -->
+        <div class="method">
+            <h3>
+                🛠️ Method 2: DevTools Sources Tab 
+                <span class="status alternative">ALTERNATIVE</span>
+            </h3>
+            <p>Execute code directly in the Sources tab:</p>
+            
+            <div class="step">
+                <strong>Step 1:</strong> Open Developer Tools (F12)
+            </div>
+            <div class="step">
+                <strong>Step 2:</strong> Go to "Sources" tab
+            </div>
+            <div class="step">
+                <strong>Step 3:</strong> Click "Snippets" in left sidebar
+            </div>
+            <div class="step">
+                <strong>Step 4:</strong> Right-click → "New snippet"
+            </div>
+            <div class="step">
+                <strong>Step 5:</strong> Name it "payment-fix" and paste the code
+            </div>
+            <div class="step">
+                <strong>Step 6:</strong> Right-click snippet → "Run"
+            </div>
+            
+            <button class="btn" onclick="showSnippetCode()">📝 Show Snippet Code</button>
+        </div>
+        
+        <!-- Method 3: Console Troubleshooting -->
+        <div class="method">
+            <h3>
+                🔍 Method 3: Console Debugging 
+                <span class="status advanced">ADVANCED</span>
+            </h3>
+            <p>Troubleshoot why console isn't responding:</p>
+            
+            <div class="step">
+                <strong>Test 1:</strong> Try a simple command first:
+                <pre>console.log('test');</pre>
+            </div>
+            
+            <div class="step">
+                <strong>Test 2:</strong> Check if console is in the right context:
+                <pre>window.location.href</pre>
+            </div>
+            
+            <div class="step">
+                <strong>Test 3:</strong> Clear console and try again:
+                <pre>console.clear();</pre>
+            </div>
+            
+            <div class="step">
+                <strong>Test 4:</strong> Check for JavaScript errors:
+                <pre>window.onerror = function(msg, url, line) { console.log('Error:', msg); };</pre>
+            </div>
+        </div>
+        
+        <!-- Method 4: Manual DOM Manipulation -->
+        <div class="method">
+            <h3>
+                ✋ Method 4: Manual Steps 
+                <span class="status alternative">BACKUP PLAN</span>
+            </h3>
+            <p>If all else fails, follow these manual steps:</p>
+            
+            <div class="step">
+                <strong>Step 1:</strong> Right-click the "Processing..." text in the modal
+            </div>
+            <div class="step">
+                <strong>Step 2:</strong> Select "Inspect Element"
+            </div>
+            <div class="step">
+                <strong>Step 3:</strong> Right-click the element in DevTools
+            </div>
+            <div class="step">
+                <strong>Step 4:</strong> Select "Edit as HTML"
+            </div>
+            <div class="step">
+                <strong>Step 5:</strong> Replace with the form HTML (provided below)
+            </div>
+            
+            <button class="btn" onclick="showManualHTML()">📝 Show Manual HTML</button>
+        </div>
+        
+        <div class="success">
+            <strong>✅ Success Indicators:</strong>
+            <ul>
+                <li>Credit card form appears in the payment modal</li>
+                <li>Form fields are properly formatted and validated</li>
+                <li>Test card number (4242 4242 4242 4242) is accepted</li>
+                <li>Form submission shows processing animation</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function copyBookmarklet() {
+            const code = document.getElementById('bookmarkletCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✅ Bookmarklet code copied to clipboard!');
+            });
+        }
+        
+        function showSnippetCode() {
+            alert('The snippet code is the same as the bookmarklet, but without the "javascript:" prefix. Copy the content inside the function.');
+        }
+        
+        function showManualHTML() {
+            const html = `<div id="paymentFormContainer" style="padding: 20px; background: rgba(255,255,255,0.95); border-radius: 15px; margin: 15px 0;">
+    <h3 style="color: #333; margin-bottom: 20px; text-align: center;">💳 Complete Your Investment</h3>
+    
+    <form id="paymentForm" style="max-width: 400px; margin: 0 auto;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #555; font-weight: bold;">📧 Email Address</label>
+            <input type="email" id="email" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;" placeholder="your@email.com">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #555; font-weight: bold;">👤 Cardholder Name</label>
+            <input type="text" id="cardholderName" required style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;" placeholder="John Doe">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #555; font-weight: bold;">💳 Card Number</label>
+            <input type="text" id="cardNumber" required maxlength="19" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;" placeholder="1234 5678 9012 3456">
+        </div>
+        
+        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+            <div style="flex: 1;">
+                <label style="display: block; margin-bottom: 5px; color: #555; font-weight: bold;">📅 Expiry</label>
+                <input type="text" id="expiryDate" required maxlength="5" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;" placeholder="MM/YY">
+            </div>
+            <div style="flex: 1;">
+                <label style="display: block; margin-bottom: 5px; color: #555; font-weight: bold;">🔒 CVC</label>
+                <input type="text" id="cvc" required maxlength="4" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;" placeholder="123">
+            </div>
+        </div>
+        
+        <button type="submit" style="width: 100%; padding: 15px; background: linear-gradient(45deg, #28a745, #20c997); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer;">
+            🚀 Complete Investment Payment
+        </button>
+    </form>
+</div>`;
+            
+            navigator.clipboard.writeText(html).then(() => {
+                alert('✅ Manual HTML code copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>
