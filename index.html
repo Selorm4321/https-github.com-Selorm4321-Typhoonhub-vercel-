@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TyphoonHub - All Shows</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>All Shows</h1>
+        </header>
+        
+        <main class="main-content">
+            <div class="shows-grid" id="showsGrid">
+                <!-- Show cards will be populated by JavaScript -->
+            </div>
+            
+            <div class="navigation-arrows">
+                <button class="nav-arrow nav-prev" id="prevBtn" aria-label="Previous shows">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="nav-arrow nav-next" id="nextBtn" aria-label="Next shows">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Loading spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
