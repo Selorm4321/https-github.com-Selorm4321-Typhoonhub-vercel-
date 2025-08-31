@@ -1,59 +1,90 @@
+// Helper to generate inline SVG thumbnails so the page doesn't rely on
+// external image hosts. Some providers (like Unsplash) now block hotlinking,
+// which results in 403 responses and empty thumbnails. Instead of using
+// `data:` URLs (which can be blocked by Content Security Policies) we embed
+// the SVG markup directly in the page so it always renders.
+const createInlineThumbnail = (title) => {
+    return `
+        <svg
+            class="thumbnail-image"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 400 225"
+            width="100%"
+            height="100%"
+            preserveAspectRatio="xMidYMid slice"
+            role="img"
+            aria-label="${title} thumbnail"
+        >
+            <rect width="400" height="225" fill="#333" />
+            <text
+                x="50%"
+                y="50%"
+                dominant-baseline="middle"
+                text-anchor="middle"
+                fill="#fff"
+                font-family="Arial, sans-serif"
+                font-size="24"
+            >${title}</text>
+        </svg>
+    `;
+};
+
 // Show data - This would typically come from an API
 const showsData = [
     {
         id: 1,
         title: "MAMI",
         genre: "Drama",
-        thumbnail: "https://images.unsplash.com/photo-1489599128872-7e18526b2176?w=400&h=225&fit=crop",
+        thumbnail: createInlineThumbnail("MAMI"),
         description: "A compelling drama series"
     },
     {
         id: 2,
         title: "Alice And Huck",
         genre: "Adventure",
-        thumbnail: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400&h=225&fit=crop",
+        thumbnail: createInlineThumbnail("Alice And Huck"),
         description: "An adventure tale of friendship"
     },
     {
         id: 3,
         title: "When Jesse was Born",
         genre: "Biography",
-        thumbnail: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=225&fit=crop",
+        thumbnail: createInlineThumbnail("When Jesse was Born"),
         description: "A biographical journey"
     },
     {
         id: 4,
         title: "Thirsty (Trailer)",
         genre: "Thriller",
-        thumbnail: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=225&fit=crop",
+        thumbnail: createInlineThumbnail("Thirsty"),
         description: "A thrilling trailer"
     },
     {
         id: 5,
         title: "New Day",
         genre: "Romance",
-        thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=225&fit=crop",
+        thumbnail: createInlineThumbnail("New Day"),
         description: "A romantic story of new beginnings"
     },
     {
         id: 6,
         title: "Typhoon Talk: Break the Stigma",
         genre: "Documentary",
-        thumbnail: "https://images.unsplash.com/photo-1574267432553-4b4628081c31?w=400&h=225&fit=crop",
+        thumbnail: createInlineThumbnail("Typhoon Talk"),
         description: "Breaking barriers and stigmas"
     },
     {
         id: 7,
         title: "Silent Waters",
         genre: "Mystery",
-        thumbnail: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=400&h=225&fit=crop",
+        thumbnail: createInlineThumbnail("Silent Waters"),
         description: "A mysterious tale by the water"
     },
     {
         id: 8,
         title: "City Lights",
         genre: "Urban Drama",
-        thumbnail: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1f?w=400&h=225&fit=crop",
+        thumbnail: createInlineThumbnail("City Lights"),
         description: "Stories from the big city"
     }
 ];
@@ -131,19 +162,23 @@ class ShowsManager {
     
     createThumbnailElement(show) {
         if (show.thumbnail) {
+            // If the thumbnail string contains raw SVG markup, return it directly
+            if (show.thumbnail.trim().startsWith('<svg')) {
+                return show.thumbnail;
+            }
+            // Otherwise treat it as an image URL
             return `
-                <img 
-                    class="thumbnail-image" 
-                    src="${show.thumbnail}" 
+                <img
+                    class="thumbnail-image"
+                    src="${show.thumbnail}"
                     alt="${this.escapeHtml(show.title)} thumbnail"
                     onerror="this.parentElement.innerHTML = this.parentElement.dataset.fallback"
                     data-fallback='<div class="thumbnail-placeholder" aria-label="No thumbnail available"></div>'
                     loading="lazy"
                 />
             `;
-        } else {
-            return '<div class="thumbnail-placeholder" aria-label="No thumbnail available"></div>';
         }
+        return '<div class="thumbnail-placeholder" aria-label="No thumbnail available"></div>';
     }
     
     renderShows() {
