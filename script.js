@@ -30,64 +30,8 @@ const createInlineThumbnail = (title) => {
 };
 
 // Show data - This would typically come from an API
-const showsData = [
-    {
-        id: 1,
-        title: "MAMI",
-        genre: "Drama",
-        thumbnail: createInlineThumbnail("MAMI"),
-        description: "A compelling drama series"
-    },
-    {
-        id: 2,
-        title: "Alice And Huck",
-        genre: "Adventure",
-        thumbnail: createInlineThumbnail("Alice And Huck"),
-        description: "An adventure tale of friendship"
-    },
-    {
-        id: 3,
-        title: "When Jesse was Born",
-        genre: "Biography",
-        thumbnail: createInlineThumbnail("When Jesse was Born"),
-        description: "A biographical journey"
-    },
-    {
-        id: 4,
-        title: "Thirsty (Trailer)",
-        genre: "Thriller",
-        thumbnail: createInlineThumbnail("Thirsty"),
-        description: "A thrilling trailer"
-    },
-    {
-        id: 5,
-        title: "New Day",
-        genre: "Romance",
-        thumbnail: createInlineThumbnail("New Day"),
-        description: "A romantic story of new beginnings"
-    },
-    {
-        id: 6,
-        title: "Typhoon Talk: Break the Stigma",
-        genre: "Documentary",
-        thumbnail: createInlineThumbnail("Typhoon Talk"),
-        description: "Breaking barriers and stigmas"
-    },
-    {
-        id: 7,
-        title: "Silent Waters",
-        genre: "Mystery",
-        thumbnail: createInlineThumbnail("Silent Waters"),
-        description: "A mysterious tale by the water"
-    },
-    {
-        id: 8,
-        title: "City Lights",
-        genre: "Urban Drama",
-        thumbnail: createInlineThumbnail("City Lights"),
-        description: "Stories from the big city"
-    }
-];
+// Global Cinema shows have been removed, leaving an empty list
+const showsData = [];
 
 class ShowsManager {
     constructor() {
@@ -243,14 +187,14 @@ class ShowsManager {
     }
     
     updateNavigationButtons() {
-        this.prevBtn.disabled = this.currentPage === 0;
-        this.nextBtn.disabled = this.currentPage === this.maxPages - 1;
-        
+        this.prevBtn.disabled = this.currentPage <= 0;
+        this.nextBtn.disabled = this.currentPage >= this.maxPages - 1;
+
         // Update ARIA labels
-        this.prevBtn.setAttribute('aria-label', 
-            `Previous page${this.currentPage === 0 ? ' (disabled)' : ''}`);
-        this.nextBtn.setAttribute('aria-label', 
-            `Next page${this.currentPage === this.maxPages - 1 ? ' (disabled)' : ''}`);
+        this.prevBtn.setAttribute('aria-label',
+            `Previous page${this.currentPage <= 0 ? ' (disabled)' : ''}`);
+        this.nextBtn.setAttribute('aria-label',
+            `Next page${this.currentPage >= this.maxPages - 1 ? ' (disabled)' : ''}`);
     }
     
     handleShowClick(showId) {
