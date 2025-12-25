@@ -23,6 +23,7 @@ import { getStorageUrl, db } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
 import { collection, addDoc, serverTimestamp } from "firebase/firestore"
 import { useAuth } from "./auth-context"
+import { PayPalButtons } from "@paypal/react-paypal-js"
 
 interface TyphoonVideoPlayerProps {
     videoPath: string
@@ -436,30 +437,59 @@ export default function TyphoonVideoPlayer({
                             <p className="text-sm text-gray-300">Processing PayPal Transaction...</p>
                         </div>
                     ) : (
-                        <div className="space-y-3">
-                            {rentalPrice > 0 && (
-                                <Button
-                                    className="w-full bg-[#E50914] hover:bg-[#c40812] h-12 text-lg"
-                                    onClick={() => handlePayment('rent')}
-                                >
-                                    <Play className="w-4 h-4 mr-2" />
-                                    Rent for ${rentalPrice}
-                                </Button>
-                            )}
-                            {price > 0 && (
-                                <Button
-                                    variant="outline"
-                                    className="w-full border-gray-600 text-white hover:bg-gray-800 h-10"
-                                    onClick={() => handlePayment('buy')}
-                                >
-                                    Buy for ${price}
-                                </Button>
-                            )}
-                            <div className="pt-4 flex items-center justify-center gap-2 text-xs text-gray-500">
-                                <CreditCard className="w-3 h-3" />
-                                <span>Secure payments via PayPal to {creatorPaypal}</span>
+                            <div className="w-full max-w-[300px] mx-auto space-y-4">
+                                {(rentalPrice > 0 || price > 0) && (
+                                    <div className="relative z-0">
+                                        <PayPalButtons
+                                            style={{ layout: "vertical", shape: "rect" }}
+                                            createOrder={(data, actions) => {
+                                                return actions.order.create({
+                                                    purchase_units: [
+                                                        {
+                                                            description: rentalPrice > 0 ? `Rent: ${title}` : `Buy: ${title}`,
+                                                            amount: {
+                                                                value: (rentalPrice > 0 ? rentalPrice : price).toString(),
+                                                            },
+                                                        },
+                                                    ],
+                                                })
+                                            }}
+                                            onApprove={async (data, actions) => {
+                                                if (actions.order) {
+                                                    const details = await actions.order.capture()
+                                                    console.log("Transaction completed by " + details.payer.name?.given_name)
+                                                    
+                                                    // Handle success logic
+                                                    const type = rentalPrice > 0 ? 'rent' : 'buy'
+                                                    const recipientEmail = creatorPaypal || "platform@typhoonhub.ca"
+                                                    const amount = rentalPrice > 0 ? rentalPrice : price
+
+                                                    // Log transaction in Firestore
+                                                    await addDoc(collection(db, "transactions"), {
+                                                        userId: user?.id || "anonymous",
+                                                        userEmail: user?.email || "anonymous",
+                                                        videoId: videoPath, 
+                                                        amount: amount,
+                                                        type: type,
+                                                        date: serverTimestamp(),
+                                                        status: "completed",
+                                                        recipient: recipientEmail,
+                                                        paypalOrderId: data.orderID
+                                                    })
+
+                                                    setIsUnlocked(true)
+                                                    setPaymentSuccessMsg(`Payment successful!`)
+                                                    setTimeout(() => setPaymentSuccessMsg(null), 3000)
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                )}
                             </div>
-                        </div>
+                            <div className="pt-2 flex items-center justify-center gap-2 text-xs text-gray-500">
+                                <CreditCard className="w-3 h-3" />
+                                <span>Secured by PayPal</span>
+                            </div>
                     )}
                 </div>
             </div>
