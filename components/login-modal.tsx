@@ -121,7 +121,7 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }: { isOpen: bool
                             }}
                             className="text-[#3aa7ff] hover:underline"
                         >
-                            {isResetting ? "Back to Login" : "Forgot Password?"}
+                            {isResetting ? "Back to Login" : "Reset Password?"}
                         </button>
 
                         {!isResetting && (
