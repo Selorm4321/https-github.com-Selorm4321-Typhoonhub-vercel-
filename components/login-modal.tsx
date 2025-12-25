@@ -82,22 +82,37 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }: { isOpen: bool
                         </div>
 
                         {!isResetting && (
-                            <div className="relative">
-                                <Input
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="bg-[#1a1a1a] border-[#2a2a2a] text-white h-12 pr-10"
-                                    required
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
-                                >
-                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                                </button>
+                            <div className="space-y-1">
+                                <div className="relative">
+                                    <Input
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder="Password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="bg-[#1a1a1a] border-[#2a2a2a] text-white h-12 pr-10"
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                                    >
+                                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                    </button>
+                                </div>
+                                <div className="flex justify-end">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setIsResetting(true)
+                                            setError("")
+                                            setSuccessMessage("")
+                                        }}
+                                        className="text-sm text-[#3aa7ff] hover:underline"
+                                    >
+                                        Forgot Password?
+                                    </button>
+                                </div>
                             </div>
                         )}
 
@@ -112,17 +127,19 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }: { isOpen: bool
 
                     <div className="mt-6 flex flex-col space-y-2 text-center text-sm text-gray-400">
                         {/* Toggle Reset Mode */}
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setIsResetting(!isResetting)
-                                setError("")
-                                setSuccessMessage("")
-                            }}
-                            className="text-[#3aa7ff] hover:underline"
-                        >
-                            {isResetting ? "Back to Login" : "Reset Password?"}
-                        </button>
+                        {isResetting && (
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setIsResetting(false)
+                                    setError("")
+                                    setSuccessMessage("")
+                                }}
+                                className="text-[#3aa7ff] hover:underline"
+                            >
+                                Back to Login
+                            </button>
+                        )}
 
                         {!isResetting && (
                             <div>
