@@ -1,0 +1,36 @@
+name: Auto Commit Changes
+
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+  workflow_dispatch:
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      
+      - name: Auto commit changes
+        run: |
+          # Check if there are any changes to commit
+          if [[ -n $(git status --porcelain) ]]; then
+            git add .
+            git commit -m "Auto-commit: Update files [skip ci]"
+            git push
+            echo "Changes committed and pushed"
+          else
+            echo "No changes to commit"
+          fi
