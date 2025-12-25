@@ -443,6 +443,10 @@ export default function TyphoonVideoPlayer({
                                         <PayPalButtons
                                             style={{ layout: "vertical", shape: "rect" }}
                                             createOrder={(data, actions) => {
+                                                const recipientInfo = creatorPaypal ? {
+                                                    email_address: creatorPaypal
+                                                } : undefined
+
                                                 return actions.order.create({
                                                     purchase_units: [
                                                         {
@@ -450,6 +454,7 @@ export default function TyphoonVideoPlayer({
                                                             amount: {
                                                                 value: (rentalPrice > 0 ? rentalPrice : price).toString(),
                                                             },
+                                                            ...(recipientInfo && { payee: recipientInfo }),
                                                         },
                                                     ],
                                                 })
