@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Updated to Netflix/streaming platform theme with semantic tokens */
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+
+  --card: 0 0% 8%;
+  /* #141414 */
+  --card-foreground: 0 0% 100%;
+
+  --popover: 0 0% 10%;
+  /* #1a1a1a */
+  --popover-foreground: 0 0% 100%;
+
+  --primary: 356 93% 47%;
+  /* #e50914 */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 356 93% 36%;
+  /* #b20710 */
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 0 0% 16%;
+  /* #2a2a2a */
+  --muted-foreground: 0 0% 64%;
+  /* #a3a3a3 */
+
+  --accent: 356 93% 47%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 72% 51%;
+  /* #dc2626 */
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 16%;
+  /* #2a2a2a */
+  --input: 0 0% 10%;
+  /* #1a1a1a */
+  --ring: 356 93% 47%;
+
+  --radius: 0.5rem;
+
+  --sidebar: 0 0% 0%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 356 93% 47%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 356 93% 36%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 0 0% 16%;
+  --sidebar-ring: 356 93% 47%;
+}
+
+.dark {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --card: 0 0% 8%;
+  --card-foreground: 0 0% 100%;
+  --popover: 0 0% 10%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 356 93% 47%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 356 93% 36%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 0 0% 16%;
+  --muted-foreground: 0 0% 64%;
+  --accent: 356 93% 47%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% 16%;
+  --input: 0 0% 10%;
+  --ring: 356 93% 47%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .mono {
+    font-family: var(--font-mono);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
