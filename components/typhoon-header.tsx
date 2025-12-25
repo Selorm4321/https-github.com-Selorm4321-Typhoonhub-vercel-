@@ -76,6 +76,7 @@ function TyphoonHeader() {
         { name: "Live TV", href: "/live" },
         { name: "Typhoonpod", href: "/typhoonhubpods" },
         { name: "Set Games", href: "/set-games" },
+        { name: "Typhoon Tools", href: "/tools" },
         { name: "Submit Film", href: "/submit" },
         { name: "Join Us", href: "/join-us" },
         // "Invest" removed as requested
