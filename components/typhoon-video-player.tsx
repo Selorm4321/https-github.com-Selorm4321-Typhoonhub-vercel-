@@ -437,6 +437,7 @@ export default function TyphoonVideoPlayer({
                             <p className="text-sm text-gray-300">Processing PayPal Transaction...</p>
                         </div>
                     ) : (
+                        <>
                             <div className="w-full max-w-[300px] mx-auto space-y-4">
                                 {(rentalPrice > 0 || price > 0) && (
                                     <div className="relative z-0">
@@ -448,11 +449,13 @@ export default function TyphoonVideoPlayer({
                                                 } : undefined
 
                                                 return actions.order.create({
+                                                    intent: "CAPTURE",
                                                     purchase_units: [
                                                         {
                                                             description: rentalPrice > 0 ? `Rent: ${title}` : `Buy: ${title}`,
                                                             amount: {
                                                                 value: (rentalPrice > 0 ? rentalPrice : price).toString(),
+                                                                currency_code: "USD"
                                                             },
                                                             ...(recipientInfo && { payee: recipientInfo }),
                                                         },
@@ -463,7 +466,7 @@ export default function TyphoonVideoPlayer({
                                                 if (actions.order) {
                                                     const details = await actions.order.capture()
                                                     console.log("Transaction completed by " + details.payer.name?.given_name)
-                                                    
+
                                                     // Handle success logic
                                                     const type = rentalPrice > 0 ? 'rent' : 'buy'
                                                     const recipientEmail = creatorPaypal || "platform@typhoonhub.ca"
@@ -473,7 +476,7 @@ export default function TyphoonVideoPlayer({
                                                     await addDoc(collection(db, "transactions"), {
                                                         userId: user?.id || "anonymous",
                                                         userEmail: user?.email || "anonymous",
-                                                        videoId: videoPath, 
+                                                        videoId: videoPath,
                                                         amount: amount,
                                                         type: type,
                                                         date: serverTimestamp(),
@@ -495,6 +498,7 @@ export default function TyphoonVideoPlayer({
                                 <CreditCard className="w-3 h-3" />
                                 <span>Secured by PayPal</span>
                             </div>
+                        </>
                     )}
                 </div>
             </div>
